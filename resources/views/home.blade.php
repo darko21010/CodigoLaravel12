@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inicio</title>
-</head>
-<body>
-    <h1> Bienvenido a la página de inicio </h1>
-    @include('menu')
-</body>
-</html>
+@extends('layout')
+
+@section('title', 'Home')
+
+@section('content')
+    <table>
+        <tr>
+            <td colspan="4">Home</td>
+        </tr>
+        @auth
+            <tr>
+                <td colspan="4">{{ auth()->user()->name }}</td>
+            </tr>
+        @endauth
+    </table>
+@endsection

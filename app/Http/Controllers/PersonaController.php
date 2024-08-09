@@ -3,26 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Persona;
-
 use App\Http\Requests\CreatePersonaRequest;
-
 
 class PersonaController extends Controller
 {
-    public function index()
+    public function index() // listado de personas
     {
         $personas = Persona::all();
         return view('personas.index', compact('personas'));
     }
 
-    public function showOptions()
+    public function showOptions()//menu de opciones
     {
         return view('personas.options');
     }
 
-    public function create()
+    public function create()// crear o agregar nueva persona
     {
         return view('personas.create');
     }
@@ -30,7 +27,6 @@ class PersonaController extends Controller
     public function store(CreatePersonaRequest $request)
     {
         Persona::create($request->validated());
-
         return redirect()->route('personas.index')->with('success', 'Persona creada correctamente.');
     }
 
@@ -44,16 +40,14 @@ class PersonaController extends Controller
     {
         $persona = Persona::findOrFail($nPerCodigo);
         $persona->update($request->validated());
-
         return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente.');
     }
-    
+
     public function findForEdit(Request $request)
     {
         $validated = $request->validate([
             'nPerCodigo' => 'required|integer|exists:persona,nPerCodigo',
         ]);
-
         return redirect()->route('personas.edit', $validated['nPerCodigo']);
     }
 
@@ -61,8 +55,6 @@ class PersonaController extends Controller
     {
         $persona = Persona::findOrFail($nPerCodigo);
         $persona->delete();
-
         return redirect()->route('personas.index')->with('success', 'Persona eliminada correctamente.');
     }
 }
-
